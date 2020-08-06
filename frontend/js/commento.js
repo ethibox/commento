@@ -296,7 +296,7 @@
     name.innerText = commenter.name;
     notificationSettingsButton.innerText = "Notification Settings";
     profileEditButton.innerText = "Edit Profile";
-    logoutButton.innerText = "Logout";
+    logoutButton.innerText = "Se déconnecter";
 
     onclick(logoutButton, global.logout);
     onclick(notificationSettingsButton, notificationSettings, email.unsubscribeSecretHex);
@@ -374,26 +374,7 @@
 
   function footerLoad() {
     var footer = create("div");
-    var aContainer = create("div");
-    var a = create("a");
-    var text = create("span");
-
     footer.id = ID_FOOTER;
-
-    classAdd(footer, "footer");
-    classAdd(aContainer, "logo-container");
-    classAdd(a, "logo");
-    classAdd(text, "logo-text");
-
-    attrSet(a, "href", "https://commento.io");
-    attrSet(a, "target", "_blank");
-
-    text.innerText = "Commento";
-
-    append(a, text);
-    append(aContainer, a);
-    append(footer, aContainer);
-
     return footer;
   }
 
@@ -568,15 +549,15 @@
     classAdd(markdownButton, "markdown-button");
     classAdd(textareaSuperContainer, "button-margin");
 
-    attrSet(textarea, "placeholder", "Add a comment");
+    attrSet(textarea, "placeholder", "Écrire un commentaire");
     attrSet(anonymousCheckbox, "type", "checkbox");
     attrSet(anonymousCheckboxLabel, "for", ID_ANONYMOUS_CHECKBOX + id);
 
-    anonymousCheckboxLabel.innerText = "Comment anonymously";
+    anonymousCheckboxLabel.innerText = "Commenter anonymement";
     if (edit === true) {
-      submitButton.innerText = "Save Changes";
+      submitButton.innerText = "Sauvegarder les changements";
     } else {
-      submitButton.innerText = "Add Comment";
+      submitButton.innerText = "Envoyer un commentaire";
     }
     markdownButton.innerHTML = "<b>M &#8595;</b> &nbsp; Markdown";
 
@@ -669,7 +650,7 @@
     classAdd(loginText, "login-text");
     classAdd(commentsArea, "comments");
 
-    loginText.innerText = "Login";
+    loginText.innerText = "Se connecter";
     commentsArea.innerHTML = "";
 
     onclick(loginText, global.loginBoxShow, null);
@@ -853,19 +834,19 @@
     var elapsed = current - previous;
 
     if (elapsed < msJustNow) {
-      return "just now";
-    } else if (elapsed < msMinutesAgo) {
-      return Math.round(elapsed / msPerSecond) + " seconds ago";
-    } else if (elapsed < msHoursAgo) {
-      return Math.round(elapsed / msPerMinute) + " minutes ago";
-    } else if (elapsed < msDaysAgo ) {
-      return Math.round(elapsed / msPerHour ) + " hours ago";
-    } else if (elapsed < msMonthsAgo) {
-      return Math.round(elapsed / msPerDay) + " days ago";
-    } else if (elapsed < msYearsAgo) {
-      return Math.round(elapsed / msPerMonth) + " months ago";
+      return "à l'instant";
+    } else if (elapsed < msPerMinute) {
+      return "Il y a " + Math.round(elapsed / 1000) + " secondes";
+    } else if (elapsed < msPerHour) {
+      return "Il y a " + Math.round(elapsed / msPerMinute) + " minutes";
+    } else if (elapsed < msPerDay ) {
+      return "Il y a " + Math.round(elapsed / msPerHour ) + " heures";
+    } else if (elapsed < msPerMonth) {
+      return "Il y a " + Math.round(elapsed / msPerDay) + " jours";
+    } else if (elapsed < msPerYear) {
+      return "Il y a " + Math.round(elapsed / msPerMonth) + " mois";
     } else {
-      return Math.round(elapsed / msPerYear ) + " years ago";
+      return "Il y a " + Math.round(elapsed / msPerYear ) + " années";
     }
   }
 
@@ -968,21 +949,21 @@
       contents.id = ID_CONTENTS + comment.commentHex;
       name.id = ID_NAME + comment.commentHex;
 
-      collapse.title = "Collapse children";
+      collapse.title = "Réduire";
       upvote.title = "Upvote";
       downvote.title = "Downvote";
-      edit.title = "Edit";
-      reply.title = "Reply";
-      approve.title = "Approve";
-      remove.title = "Remove";
+      edit.title = "Editer";
+      reply.title = "Répondre";
+      approve.title = "Approuver";
+      remove.title = "Supprimer";
       if (stickyCommentHex === comment.commentHex) {
         if (isModerator) {
-          sticky.title = "Unsticky";
+          sticky.title = "Désépingler";
         } else {
-          sticky.title = "This comment has been stickied";
+          sticky.title = "Ce commentaire a été épinglé.";
         }
       } else {
-        sticky.title = "Sticky";
+        sticky.title = "Épingler";
       }
       timeago.title = comment.creationDate.toString();
 
@@ -1429,7 +1410,7 @@
     classRemove(button, "option-collapse");
     classAdd(button, "option-uncollapse");
 
-    button.title = "Expand children";
+    button.title = "Agrandir";
 
     button = removeAllEventListeners(button);
     onclick(button, global.commentUncollapse, id);
@@ -1648,10 +1629,10 @@
     classAdd(close, "login-box-close");
     classAdd(root, "root-min-height");
 
-    forgotLink.innerText = "Forgot your password?";
-    loginLink.innerText = "Don't have an account? Sign up.";
-    emailSubtitle.innerText = "Login with your email address";
-    emailButton.innerText = "Continue";
+    forgotLink.innerText = "Mot de passe oublié ?";
+    loginLink.innerText = "Vous n'avez pas de compte ? Inscrivez-vous.";
+    emailSubtitle.innerText = "Connectez-vous avec votre adresse e-mail";
+    emailButton.innerText = "Se connecter";
     oauthSubtitle.innerText = "Proceed with social login";
     ssoSubtitle.innerText = "Proceed with " + parent.location.host + " authentication";
 
@@ -1662,7 +1643,7 @@
 
     attrSet(loginBoxContainer, "style", "display: none; opacity: 0;");
     attrSet(emailInput, "name", "email");
-    attrSet(emailInput, "placeholder", "Email address");
+    attrSet(emailInput, "placeholder", "Adresse e-mail");
     attrSet(emailInput, "type", "text");
 
     var numOauthConfigured = 0;
@@ -1766,7 +1747,7 @@
     remove($(ID_LOGIN_BOX_LOGIN_LINK_CONTAINER));
     remove($(ID_LOGIN_BOX_FORGOT_LINK_CONTAINER));
 
-    emailSubtitle.innerText = "Create an account";
+    emailSubtitle.innerText = "Créer un compte";
     popupBoxType = "signup";
     global.passwordAsk(id);
     $(ID_LOGIN_BOX_EMAIL_INPUT).focus();
@@ -1864,7 +1845,7 @@
       order = ["name", "website", "password"];
       fid = [ID_LOGIN_BOX_NAME_INPUT, ID_LOGIN_BOX_WEBSITE_INPUT, ID_LOGIN_BOX_PASSWORD_INPUT];
       type = ["text", "text", "password"];
-      placeholder = ["Real Name", "Website (Optional)", "Password"];
+      placeholder = ["Votre nom/pseudo", "Site web (facultatif)", "Mot de passe"];
     } else {
       order = ["password"];
       fid = [ID_LOGIN_BOX_PASSWORD_INPUT];
@@ -1873,9 +1854,9 @@
     }
 
     if (popupBoxType === "signup") {
-      subtitle.innerText = "Finish the rest of your profile to complete."
+      subtitle.innerText = "Terminez de compléter votre profil."
     } else {
-      subtitle.innerText = "Enter your password to log in."
+      subtitle.innerText = "Entrez votre mot de passe pour vous connecter"
     }
 
     for (var i = 0; i < order.length; i++) {
@@ -1899,11 +1880,12 @@
       if (order[i] === "password") {
         var fieldButton = create("button");
         classAdd(fieldButton, "email-button");
-        fieldButton.innerText = popupBoxType;
 
         if (popupBoxType === "signup") {
+          fieldButton.innerText = "S'inscrire";
           onclick(fieldButton, global.signup, id);
         } else {
+          fieldButton.innerText = "Se connecter";
           onclick(fieldButton, global.login, id);
         }
 
@@ -2069,10 +2051,6 @@
     classAdd(mainArea, "blurred");
     
     attrSet(loginBoxContainer, "style", "");
-
-    window.location.hash = ID_LOGIN_BOX_CONTAINER;
-
-    $(ID_LOGIN_BOX_EMAIL_INPUT).focus();
   }
 
 
